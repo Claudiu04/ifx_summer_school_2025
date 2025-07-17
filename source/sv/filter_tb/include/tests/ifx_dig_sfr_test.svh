@@ -37,6 +37,36 @@ class ifx_dig_sfr_test extends ifx_dig_testbase;
 
         `TEST_INFO("Main phase started")
 
+        `TEST_INFO("Start using write_reg")
+        write_reg_fields(
+            .reg_name("FILTER_CTRL3"),
+            .fields_names({"INT_EN", "FILTER_TYPE"}),
+            .fields_values({1'b1, 2'b10})
+        );
+
+        write_reg_fields(
+            .reg_name("FILTER_CTRL3"),
+            .fields_names({"FILTER_TYPE"}),
+            .fields_values({2'b11}) //modific doar filter_type ca sa vad ca restul fieldurilor raman neschimbate
+        );
+
+        `TEST_INFO("Start using read_reg")
+        read_reg("FILTER_CTRL3");
+
+        read_reg("INT_STATUS2");
+
+        `TEST_INFO("Read and write to non existing register")
+        read_reg("NONE"); //incercam citirea dintr un registru care nu exista denumit NONE
+        /*
+        write_reg_fields( //initial nu au fost comentate liniile astea pentru a vedea in log ce se intampla
+            .reg_name("NONE"), //incercam scrierea intr un registru care nu exista
+            .fields_names({"FILTER_TYPE"}),
+            .fields_values({2'b11})
+        );
+        */
+        `TEST_INFO("Stop using read_reg and write_reg")
+
+
         for (int addr=0; addr < 2**`AWIDTH; addr++) begin
 
             `TEST_INFO($sformatf("Write all 1's to address %b", addr))
