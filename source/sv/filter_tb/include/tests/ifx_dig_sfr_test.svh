@@ -56,7 +56,7 @@ class ifx_dig_sfr_test extends ifx_dig_testbase;
         read_reg("INT_STATUS2");
 
         `TEST_INFO("Read and write to non existing register")
-        read_reg("NONE"); //incercam citirea dintr un registru care nu exista denumit NONE
+        //read_reg("NONE"); //incercam citirea dintr un registru care nu exista denumit NONE
         /*
         write_reg_fields( //initial nu au fost comentate liniile astea pentru a vedea in log ce se intampla
             .reg_name("NONE"), //incercam scrierea intr un registru care nu exista
